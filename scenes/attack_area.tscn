@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://28v2816fy64x"]
 
-[ext_resource type="Script" path="res://scenes/AttackArea.cs" id="1_s82tu"]
+[ext_resource type="Script" path="res://Scripts/AttackArea.cs" id="1_mylif"]
 [ext_resource type="Texture2D" uid="uid://f1ab4rnntfau" path="res://assets/proyectiles/477.png" id="2_pb3vt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4ut58"]
@@ -99,7 +99,7 @@ animations = [{
 }]
 
 [node name="AttackArea" type="Area2D"]
-script = ExtResource("1_s82tu")
+script = ExtResource("1_mylif")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false

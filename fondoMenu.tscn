@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6meoqihj7xf6"]
+
+[ext_resource type="Texture2D" uid="uid://c3fv7raxwqvwn" path="res://assets/tilesets/Dungeon Tile Set/Dungeon Tile Set.png" id="1_26h7j"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0wtt0"]
+atlas = ExtResource("1_26h7j")
+region = Rect2(30.96, 30.8895, 17.4103, 16.8168)
+
+[node name="ParallaxBackground" type="ParallaxBackground"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer"]
+position = Vector2(576.125, 325)
+scale = Vector2(67.75, 40.625)
+texture = SubResource("AtlasTexture_0wtt0")

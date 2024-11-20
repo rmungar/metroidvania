@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://2t8uiwygh4rt"]
 
+[ext_resource type="Script" path="res://Scripts/Bullet.cs" id="1_awhgd"]
 [ext_resource type="Texture2D" uid="uid://7dd7j8441www" path="res://assets/proyectiles/476.png" id="1_lx00k"]
-[ext_resource type="Script" path="res://scenes/Bullet.cs" id="1_uq6q4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hsts8"]
 radius = 5.0
@@ -11,8 +11,7 @@ atlas = ExtResource("1_lx00k")
 region = Rect2(53.9599, 238.942, 9.1807, 8.17462)
 
 [node name="Bullet" type="Area2D"]
-script = ExtResource("1_uq6q4")
-Speed = 250.0
+script = ExtResource("1_awhgd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_hsts8")

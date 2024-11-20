@@ -12,6 +12,7 @@ public partial class PlayerController : CharacterBody2D
 			[Export]
 			private int Hp = 100;
 
+
 			private bool isTakingDamage = false;
 
 			private bool isDead = false;
@@ -84,7 +85,15 @@ public partial class PlayerController : CharacterBody2D
 			private PackedScene bullet;
 
 
+	// OTHERS
 
+		[Signal]
+		public delegate void InventoryEventHandler();
+
+		[Signal]
+		public delegate void PauseEventHandler();
+
+		
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -98,7 +107,13 @@ public partial class PlayerController : CharacterBody2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
+
+		Paused();
+		InventoryOpen();
+
 		if(!isDead){
+			
+
 			if(!isDashing && !isWallJumping && !isAttacking){
 				ProcessMovement(delta);
 			}
@@ -184,9 +199,21 @@ public partial class PlayerController : CharacterBody2D
 			}
 			else{
 				if (!isTakingDamage){
-					if(Velocity.Y > 0){
-						GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("fall");
+					if(GetNode<RayCast2D>("RayCastRight").IsColliding() || GetNode<RayCast2D>("RayCastLeft").IsColliding()){
+						if(GetNode<RayCast2D>("RayCastRight").IsColliding()){
+							GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH = true;
+						}
+						else{
+							GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH = false;
+						}
+						GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("wall");
 					}
+					else{
+						if(Velocity.Y > 0){
+							GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("fall");
+						}
+					}
+					
 				}
 				
 			}
@@ -215,6 +242,9 @@ public partial class PlayerController : CharacterBody2D
 
 
 	private void ProcessWallJump(double delta) {
+
+		
+
 		if(Input.IsActionJustPressed("jump") && GetNode<RayCast2D>("RayCastRight").IsColliding()) {
 
 			
@@ -224,7 +254,7 @@ public partial class PlayerController : CharacterBody2D
 
 		}else if(Input.IsActionJustPressed("jump") && GetNode<RayCast2D>("RayCastLeft").IsColliding()) {
 
-
+			
 			velocity.Y = -JumpHeight;
 			velocity.X = JumpHeight;
 			isWallJumping = true;
@@ -317,7 +347,6 @@ public partial class PlayerController : CharacterBody2D
 
 
 
-
 	public void takeDamage(int damage, Vector2 knockBack){
 
 		Hp -= damage;
@@ -351,6 +380,24 @@ public partial class PlayerController : CharacterBody2D
 	public void RespawnPlayer(){
 		Show();
 		Hp = 100;
+		isDead = false;
+	}
+
+
+
+	private void InventoryOpen(){
+		if (Input.IsActionJustPressed("inventory")){
+
+			EmitSignal(nameof(Inventory));
+
+		}
+	}
+
+	private void Paused(){
+
+		if (Input.IsActionJustPressed("pause")){
+			EmitSignal(nameof(Pause));
+		}
 
 	}
 }

@@ -21,8 +21,24 @@ public partial class GameManager : Node2D
 	public void RespawnPlayer(){
 
 		PlayerController pc = GetNode<PlayerController>("Player");
-
+		RespawnPoint = GetNode<Marker2D>("RespawnPoint");
 		pc.GlobalPosition = RespawnPoint.GlobalPosition;
 		pc.RespawnPlayer();
 	}	
+
+	private void _on_player_death(){
+		RespawnPlayer();
+	}
+
+
+	private void _on_player_inventory(){
+
+	}
+
+	private void _on_player_pause(){
+
+		GetTree().Paused = true;
+		GetTree().ChangeSceneToFile("scenes/pauseMenu.tscn");
+
+	}
 }

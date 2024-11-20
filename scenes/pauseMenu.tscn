@@ -1,0 +1,77 @@
+[gd_scene load_steps=5 format=3 uid="uid://cjypdqjekwoje"]
+
+[ext_resource type="Script" path="res://Scripts/PauseMenu.cs" id="1_ollfq"]
+[ext_resource type="Theme" uid="uid://wi3c05oyr7k5" path="res://themes/botonMenu.tres" id="1_plunn"]
+
+[sub_resource type="Gradient" id="Gradient_u84tq"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0.686275)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4c0he"]
+gradient = SubResource("Gradient_u84tq")
+
+[node name="PauseMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ollfq")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(573.5, 325)
+scale = Vector2(17.8906, 10.125)
+texture = SubResource("GradientTexture2D_4c0he")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -168.0
+offset_right = 279.0
+offset_bottom = 168.0
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="RESUME" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_plunn")
+theme_override_colors/font_hover_color = Color(0, 0.776471, 0, 1)
+text = "Resume"
+
+[node name="INVENTORY" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_plunn")
+theme_override_colors/font_hover_color = Color(0, 0.776471, 0, 1)
+text = "Inventory"
+
+[node name="OPTIONS" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_plunn")
+theme_override_colors/font_hover_color = Color(0, 0.776471, 0, 1)
+disabled = true
+text = "Options"
+
+[node name="CONTROLS" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_plunn")
+theme_override_colors/font_hover_color = Color(0, 0.776471, 0, 1)
+text = "Controls
+"
+
+[node name="QUIT" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_plunn")
+theme_override_colors/font_hover_color = Color(0, 0.776471, 0, 1)
+text = "Quit"
+
+[connection signal="pressed" from="VBoxContainer/RESUME" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="VBoxContainer/INVENTORY" to="." method="_on_inventory_pressed"]
+[connection signal="pressed" from="VBoxContainer/CONTROLS" to="." method="_on_controls_pressed"]
+[connection signal="pressed" from="VBoxContainer/QUIT" to="." method="_on_quit_pressed"]
