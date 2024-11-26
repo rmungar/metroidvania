@@ -4,6 +4,10 @@ using Godot;
 public partial class GameManager : Node2D
 {
 
+
+
+	private Vector2 playerPosition = new Vector2 (0, 0);
+
 	// RESPAWN POINT
 
 		public Marker2D RespawnPoint;
@@ -36,9 +40,16 @@ public partial class GameManager : Node2D
 	}
 
 	private void _on_player_pause(){
-
 		GetTree().Paused = true;
+		playerPosition = GetNode<PlayerController>("Player").GlobalPosition;
 		GetTree().ChangeSceneToFile("scenes/pauseMenu.tscn");
+
+	}
+
+
+	private void _on_player_resume(){
+		
+		
 
 	}
 }

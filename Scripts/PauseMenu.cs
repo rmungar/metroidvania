@@ -15,16 +15,16 @@ public partial class PauseMenu : Control
 
 
 	private void _on_resume_pressed(){
-		this.Hide();
+		Hide();
 	}
 	private void _on_inventory_pressed(){
-		
+		// ABRIR LA ESCENA DE INVENTARIO
 	}
 	private void _on_quit_pressed(){
 		GetTree().Quit();
 	}
 
 	private void _on_controls_pressed(){
-
+		// DESHABILITADO
 	}
 }
