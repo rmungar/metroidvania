@@ -7,3 +7,4 @@ subpixel_positioning = 0
 [resource]
 default_font = SubResource("SystemFont_ys2gc")
 Button/colors/ColorBoton = Color(0, 0.65098, 0, 1)
+Button/font_sizes/font_size = 9

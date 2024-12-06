@@ -40,16 +40,16 @@ public partial class GameManager : Node2D
 	}
 
 	private void _on_player_pause(){
-		GetTree().Paused = true;
-		playerPosition = GetNode<PlayerController>("Player").GlobalPosition;
-		GetTree().ChangeSceneToFile("scenes/pauseMenu.tscn");
+		
+		GetNode<Control>("PauseMenu").Show();
 
 	}
 
 
 	private void _on_player_resume(){
 		
-		
-
+		GetNode<Control>("PauseMenu").Hide();
+		PlayerController pc = GetNode<PlayerController>("Player");
+		pc.isPaused = false;
 	}
 }

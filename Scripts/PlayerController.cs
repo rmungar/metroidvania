@@ -12,13 +12,14 @@ public partial class PlayerController : CharacterBody2D
 			[Export]
 			private int Hp = 100;
 
-
 			private bool isTakingDamage = false;
 
 			private bool isDead = false;
 
 			[Signal]
 			public delegate void DeathEventHandler();
+
+			public bool isPaused = false;
 
 		// MOVEMENT SPEED & JUMP STRENGTH
 
@@ -39,7 +40,7 @@ public partial class PlayerController : CharacterBody2D
 
 		// DASHING
 		
-			private int DashSpeed = 500;
+			private int DashSpeed = 400;
 
 			private bool isDashing = false;
 
@@ -61,18 +62,6 @@ public partial class PlayerController : CharacterBody2D
 
 
 
-		// ATTACKING
-
-
-			private bool isAttacking = false;
-
-			private double attackTimer = .3f;
-
-			private double attackTimerReset = .3f;
-
-			private bool canAttack = true;
-
-			private PackedScene attackArea;
 
 		// PROJECTILES
 
@@ -93,6 +82,8 @@ public partial class PlayerController : CharacterBody2D
 		[Signal]
 		public delegate void PauseEventHandler();
 
+
+
 		
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -100,7 +91,7 @@ public partial class PlayerController : CharacterBody2D
 
 	   	bullet = (PackedScene) ResourceLoader.Load("res://scenes/proyectil.tscn");
 
-		attackArea = (PackedScene) ResourceLoader.Load("res://scenes/attack_area.tscn");
+		
 
 	}
 
@@ -114,7 +105,7 @@ public partial class PlayerController : CharacterBody2D
 		if(!isDead){
 			
 
-			if(!isDashing && !isWallJumping && !isAttacking){
+			if(!isDashing && !isWallJumping){
 				ProcessMovement(delta);
 			}
 
@@ -128,7 +119,7 @@ public partial class PlayerController : CharacterBody2D
 					isInAir = false;
 				}
 				canDash = true;
-				canAttack = true;
+				
 			}
 			
 			ProcessWallJump(delta);
@@ -150,23 +141,9 @@ public partial class PlayerController : CharacterBody2D
 
 			}
 			
-			if (canAttack){
-				ProcessAttack(delta);
-			}
-
+			
 			ShootProjectiles();
 
-			if (isAttacking){
-				
-				attackTimer -= delta;
-				if(attackTimer <= 0){
-
-					isAttacking = false;
-					attackTimer = attackTimerReset;
-					canAttack = true;
-				}
-
-			}
 			
 			Velocity = velocity;
 			MoveAndSlide();
@@ -201,10 +178,10 @@ public partial class PlayerController : CharacterBody2D
 				if (!isTakingDamage){
 					if(GetNode<RayCast2D>("RayCastRight").IsColliding() || GetNode<RayCast2D>("RayCastLeft").IsColliding()){
 						if(GetNode<RayCast2D>("RayCastRight").IsColliding()){
-							GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH = true;
+							GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH = false;
 						}
 						else{
-							GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH = false;
+							GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH = true;
 						}
 						GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("wall");
 					}
@@ -246,15 +223,15 @@ public partial class PlayerController : CharacterBody2D
 		
 
 		if(Input.IsActionJustPressed("jump") && GetNode<RayCast2D>("RayCastRight").IsColliding()) {
-
-			
+			GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH = true;
+			GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("jump");
 			velocity.Y = -JumpHeight;
 			velocity.X = -JumpHeight;
 			isWallJumping = true;
 
 		}else if(Input.IsActionJustPressed("jump") && GetNode<RayCast2D>("RayCastLeft").IsColliding()) {
-
-			
+			GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH = false;
+			GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("jump");	
 			velocity.Y = -JumpHeight;
 			velocity.X = JumpHeight;
 			isWallJumping = true;
@@ -275,53 +252,57 @@ public partial class PlayerController : CharacterBody2D
 
 	private void ProcessDash (double delta){
 		
-		if (Input.IsActionJustPressed("dash")) {
+		if (Input.IsActionJustPressed("dash") ) {
 			
-			GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("dash");
+			
 
 			if (Input.IsActionPressed("right")) {
-				
+				GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("dash");
 				velocity.X = DashSpeed;
 				isDashing = true;
 			}
 			if (Input.IsActionPressed("left")) {
+				GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("dash");
 				velocity.X = -DashSpeed;
 				isDashing = true;
 			}
 			if (Input.IsActionPressed("up")) {
+				GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("dash");
 				velocity.Y = -DashSpeed;
 				isDashing = true;
 			}
+			if (Input.IsActionPressed("down") && !IsOnFloor()) {
+				GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("dash");
+				velocity.Y = DashSpeed;
+				isDashing = true;
+			}
 			if (Input.IsActionPressed("right") && Input.IsActionPressed("up")) {
+				GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("dash");
 				velocity.X = DashSpeed;
 				velocity.Y = -DashSpeed;
 				isDashing = true;
 			}
 			if (Input.IsActionPressed("left") && Input.IsActionPressed("up")) {
+				GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("dash");
 				velocity.X = -DashSpeed;
 				velocity.Y = -DashSpeed;
+				isDashing = true;
+			}
+			if (Input.IsActionPressed("right") && Input.IsActionPressed("down")) {
+				GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("dash");
+				velocity.X = DashSpeed;
+				velocity.Y = DashSpeed;
+				isDashing = true;
+			}
+			if (Input.IsActionPressed("left") && Input.IsActionPressed("down")) {
+				GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("dash");
+				velocity.X = -DashSpeed;
+				velocity.Y = DashSpeed;
 				isDashing = true;
 			}
 			dashTimer = dashTimerReset;
 			canDash = false;
 		}
-	}
-
-
-	private void ProcessAttack(double delta){
-
-		if (Input.IsActionJustPressed("attack")) {
-
-
-			GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("attack");
-			isAttacking = true;
-			
-			AttackArea instAttackArea = (AttackArea) attackArea.Instantiate();
-			instAttackArea.Position = new Vector2(this.Position.X + 30, this.Position.Y);
-			instAttackArea._Ready();
-
-		}
-
 	}
 
 
@@ -354,8 +335,7 @@ public partial class PlayerController : CharacterBody2D
 		velocity.X = knockBack.X * -facingDirection;
 		velocity.Y = knockBack.Y;
 		isTakingDamage = true;
-		GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("damageTaken");
-
+	
 		if (Hp <= 0){
 			Hp = 0;
 			isDead = true;
@@ -379,10 +359,9 @@ public partial class PlayerController : CharacterBody2D
 
 	public void RespawnPlayer(){
 		Show();
-		Hp = 100;
+		Hp = 1;
 		isDead = false;
 	}
-
 
 
 	private void InventoryOpen(){

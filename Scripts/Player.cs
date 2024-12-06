@@ -10,6 +10,8 @@ public partial class Player : CharacterBody2D
 
 		// GENERAL
 
+		private bool _isPaused = false;
+
 		private bool _isDead = false;
 		private AnimatedSprite2D animatedSprite;
 
@@ -83,167 +85,168 @@ public partial class Player : CharacterBody2D
 	public override void _PhysicsProcess(double delta)
 	{
 		
-		Vector2 velocity = Velocity;
-		float directionX = Input.GetAxis("moveLeft", "moveRight");
-				
-		if (Input.IsActionJustPressed("dash") && _canDash){
-				_isDashing = true;
-			}
-
-			
-		if (Input.IsActionJustPressed("attack") && _canAttack){
-			_isAttacking = true;
-		}
-
-		Dash();
-		Attack();
-		Jump();
-
-
-		if (!_isDead){
-			
-			// Add the gravity.
-			if (!IsOnFloor()) {
-
-				velocity += GetGravity() * (float)delta;
-				
-				if (directionX > 0){
-					velocity.X = directionX * Speed;
-					animatedSprite.FlipH = false;
-
-					if (!_isAttacking && !_isDashing && !_isJumping){						
-						if (Falling()){
-							animatedSprite.Play("fall");
-						}
-					}
-					else if (_isAttacking && !_isDashing && !_isJumping){
-						Attack();
-						AttackTimer(delta);
-						_isAttacking = false;
-					}
-					else if (!_isAttacking && _isDashing && !_isJumping){
-						DashTimer(delta);
-						Dash();
-						_isDashing = false;
-					}
-					else if(!_isAttacking && !_isDashing && _isJumping){
-						JumpTimer(delta);
-						Jump();
-						_isJumping = false;
-					}
-
-				}
-				else if (directionX < 0){
-					velocity.X = directionX * Speed;
-					animatedSprite.FlipH = true;
-
-					if (!_isAttacking && !_isDashing && !_isJumping){					
-						if (Falling()){
-							animatedSprite.Play("fall");
-						}
-					}
-					else if (_isAttacking && !_isDashing && !_isJumping){
-						Attack();
-						AttackTimer(delta);
-						_isAttacking = false;
-					}
-					else if (!_isAttacking && _isDashing && !_isJumping){
-						DashTimer(delta);
-						Dash();
-						_isDashing = false;
-					}
-					else{
-						JumpTimer(delta);
-						Jump();
-						_isJumping = false;
-					}
+		if(!_isPaused){
+			Vector2 velocity = Velocity;
+			float directionX = Input.GetAxis("moveLeft", "moveRight");
 					
+			if (Input.IsActionJustPressed("dash") && _canDash){
+					_isDashing = true;
 				}
-				else{
-					velocity.X = directionX * Speed;
-					if (!_isAttacking && !_isDashing && !_isJumping){
-						if (Falling()){
-							animatedSprite.Play("fall");
-						}
-					}
-					else if (_isAttacking && !_isDashing && !_isJumping){
-						Attack();
-						AttackTimer(delta);
-						_isAttacking = false;
-					}
-					else if (!_isAttacking && _isDashing && !_isJumping){
-						DashTimer(delta);
-						Dash();
-						_isDashing = false;
-					}
-					else{
-						JumpTimer(delta);
-						Jump();
-						_isJumping = false;
-					}
-				}		
+
+				
+			if (Input.IsActionJustPressed("attack") && _canAttack){
+				_isAttacking = true;
 			}
 
-			
-			// JUMP
-			if (Input.IsActionJustPressed("jump") && IsOnFloor()) {
-				Jump();
-				velocity.Y = JumpVelocity;
-				if (velocity.X < 0) {
-					animatedSprite.FlipH = true;
-				}
-				else if (velocity.X > 0){
-					animatedSprite.FlipH = false;
-				}
+			Dash();
+			Attack();
+			Jump();
+
+
+			if (!_isDead){
+				
+				// Add the gravity.
+				if (!IsOnFloor()) {
+
+					velocity += GetGravity() * (float)delta;
 					
-			}
-			
-			
-			
+					if (directionX > 0){
+						velocity.X = directionX * Speed;
+						animatedSprite.FlipH = false;
 
+						if (!_isAttacking && !_isDashing && !_isJumping){						
+							if (Falling()){
+								animatedSprite.Play("fall");
+							}
+						}
+						else if (_isAttacking && !_isDashing && !_isJumping){
+							Attack();
+							AttackTimer(delta);
+							_isAttacking = false;
+						}
+						else if (!_isAttacking && _isDashing && !_isJumping){
+							DashTimer(delta);
+							Dash();
+							_isDashing = false;
+						}
+						else if(!_isAttacking && !_isDashing && _isJumping){
+							JumpTimer(delta);
+							Jump();
+							_isJumping = false;
+						}
 
-			if (Input.IsActionJustPressed("projectile")) { 
-
-				Bullet instBullet = (Bullet) bullet.Instantiate();
-				instBullet.Speed = ButlletSpeed;
-				instBullet.Position = GlobalPosition + BulletOffset;
-
-				if(animatedSprite.FlipH){
-					instBullet.Speed *= -1;
-					instBullet.GetChild<CollisionShape2D>(0).GetChild<Sprite2D>(0).FlipH = true;
-				}
-
-
-				GetTree().Root.AddChild(instBullet);
-
-
-			}
-
-			
-			if (IsOnFloor()){
-				_canJump = true;
-				if(directionX > 0) {
-
-					animatedSprite.FlipH = false;
-					velocity.X = Speed;
-					if(!_isAttacking && !_isDashing){
-						animatedSprite.Play("walk");
 					}
-					else if(!_isDashing){
-						Attack();
-						AttackTimer(delta);
-						_isAttacking = false;
-					}
-					else{
+					else if (directionX < 0){
+						velocity.X = directionX * Speed;
+						animatedSprite.FlipH = true;
+
+						if (!_isAttacking && !_isDashing && !_isJumping){					
+							if (Falling()){
+								animatedSprite.Play("fall");
+							}
+						}
+						else if (_isAttacking && !_isDashing && !_isJumping){
+							Attack();
+							AttackTimer(delta);
+							_isAttacking = false;
+						}
+						else if (!_isAttacking && _isDashing && !_isJumping){
+							DashTimer(delta);
+							Dash();
+							_isDashing = false;
+						}
+						else{
+							JumpTimer(delta);
+							Jump();
+							_isJumping = false;
+						}
 						
-						DashTimer(delta);
-						Dash();
-						_isDashing = false;
 					}
-					
-					
-					
+					else{
+						velocity.X = directionX * Speed;
+						if (!_isAttacking && !_isDashing && !_isJumping){
+							if (Falling()){
+								animatedSprite.Play("fall");
+							}
+						}
+						else if (_isAttacking && !_isDashing && !_isJumping){
+							Attack();
+							AttackTimer(delta);
+							_isAttacking = false;
+						}
+						else if (!_isAttacking && _isDashing && !_isJumping){
+							DashTimer(delta);
+							Dash();
+							_isDashing = false;
+						}
+						else{
+							JumpTimer(delta);
+							Jump();
+							_isJumping = false;
+						}
+					}		
 				}
+
+				
+				// JUMP
+				if (Input.IsActionJustPressed("jump") && IsOnFloor()) {
+					Jump();
+					velocity.Y = JumpVelocity;
+					if (velocity.X < 0) {
+						animatedSprite.FlipH = true;
+					}
+					else if (velocity.X > 0){
+						animatedSprite.FlipH = false;
+					}
+						
+				}
+				
+				
+				
+
+
+				if (Input.IsActionJustPressed("projectile")) { 
+
+					Bullet instBullet = (Bullet) bullet.Instantiate();
+					instBullet.Speed = ButlletSpeed;
+					instBullet.Position = GlobalPosition + BulletOffset;
+
+					if(animatedSprite.FlipH){
+						instBullet.Speed *= -1;
+						instBullet.GetChild<CollisionShape2D>(0).GetChild<Sprite2D>(0).FlipH = true;
+					}
+
+
+					GetTree().Root.AddChild(instBullet);
+
+
+				}
+
+				
+				if (IsOnFloor()){
+					_canJump = true;
+					if(directionX > 0) {
+
+						animatedSprite.FlipH = false;
+						velocity.X = Speed;
+						if(!_isAttacking && !_isDashing){
+							animatedSprite.Play("walk");
+						}
+						else if(!_isDashing){
+							Attack();
+							AttackTimer(delta);
+							_isAttacking = false;
+						}
+						else{
+							
+							DashTimer(delta);
+							Dash();
+							_isDashing = false;
+						}
+						
+						
+						
+					}
 				else if(directionX < 0){
 
 					animatedSprite.FlipH = true;
@@ -292,6 +295,9 @@ public partial class Player : CharacterBody2D
 		
 		Velocity = velocity;
 		MoveAndSlide();
+		}
+
+		
 	}
 
 
