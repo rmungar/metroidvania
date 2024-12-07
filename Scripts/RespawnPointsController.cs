@@ -53,7 +53,7 @@ public partial class RespawnPointsController : Node2D
 		if (body is CharacterBody2D){
 			if (body is PlayerController){
 				GD.Print("Actualizando RP");
-				EmitSignal(nameof(secondCheckPoint), 1548.0, 184.0);
+				EmitSignal(nameof(secondCheckPoint), 1548.0, 150.0);
 
 			}
 		}

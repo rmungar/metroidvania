@@ -358,6 +358,9 @@ public partial class PlayerController : CharacterBody2D
 
 
 	public void RespawnPlayer(){
+		Camera2D Camera = GetNode<Camera2D>("Camera2D");
+		DeathCounter deathCounter = Camera.GetChild<DeathCounter>(0);
+		deathCounter._on_player_death();
 		Show();
 		Hp = 1;
 		isDead = false;

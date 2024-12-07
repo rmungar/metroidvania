@@ -26,8 +26,10 @@ public partial class GameManager : Node2D
 	public void RespawnPlayer(){
 		RespawnPoint = GetNode<Node2D>("RespawnPoint");
 		PlayerController pc = GetNode<PlayerController>("Player");
+		
 		pc.GlobalPosition = RespawnPoint.Position;
 		pc.RespawnPlayer();
+	
 	}	
 
 	private void _on_player_death(){
@@ -78,6 +80,19 @@ public partial class GameManager : Node2D
 	private void _on_check_points_fourth_check_point(float PositionX, float PositionY){
 		updateRespawnPoint(PositionX, PositionY);
 	}
+
+
+
+	private void _on_kill_zone_body_entered(Node2D body){
+
+		if (body is CharacterBody2D){
+			if (body is PlayerController){
+				RespawnPlayer();
+			}
+		}
+
+	}
+
 
 
 }
