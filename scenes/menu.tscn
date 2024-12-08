@@ -249,12 +249,14 @@ text = "Options"
 layout_mode = 2
 theme = ExtResource("2_wp6yi")
 theme_override_colors/font_hover_color = Color(0, 0.776471, 0, 1)
+disabled = true
 text = "CONTROLS"
 
 [node name="QUIT" type="Button" parent="VBoxBotones"]
 layout_mode = 2
 theme = SubResource("Theme_1ypuu")
 theme_override_colors/font_hover_color = Color(0, 0.776471, 0, 1)
+theme_override_font_sizes/font_size = 12
 text = "quit"
 
 [node name="TITULO" type="AnimatedSprite2D" parent="VBoxBotones"]

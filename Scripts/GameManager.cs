@@ -94,5 +94,7 @@ public partial class GameManager : Node2D
 	}
 
 
-
+	private void _on_win(){
+		GetTree().ChangeSceneToFile("res://scenes/win_Screen.tscn");
+	}
 }

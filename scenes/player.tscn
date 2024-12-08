@@ -1,4 +1,4 @@
-[gd_scene load_steps=111 format=3 uid="uid://bn5ccuksxamap"]
+[gd_scene load_steps=103 format=3 uid="uid://bn5ccuksxamap"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerController.cs" id="1_b52rk"]
 [ext_resource type="Texture2D" uid="uid://cm24a42jdvm55" path="res://assets/Calveline/Animations/player/dash/f0.png" id="2_b6fjs"]
@@ -26,15 +26,6 @@
 [ext_resource type="Texture2D" uid="uid://d2hcycfgb6htl" path="res://assets/Calveline/Animations/player/fall/f5.png" id="24_5r8t6"]
 [ext_resource type="Texture2D" uid="uid://dujml4jionqdb" path="res://assets/Calveline/Animations/player/fall/f6.png" id="25_genvp"]
 [ext_resource type="Texture2D" uid="uid://b0svxewos3drm" path="res://assets/Calveline/Animations/player/fall/f7.png" id="26_hv783"]
-[ext_resource type="Texture2D" uid="uid://crrengbniu7jk" path="res://assets/Calveline/Animations/player/idle/f0.png" id="27_t2akt"]
-[ext_resource type="Texture2D" uid="uid://hkr12n26jh0d" path="res://assets/Calveline/Animations/player/idle/f1.png" id="28_aq3cx"]
-[ext_resource type="Texture2D" uid="uid://b20c1sexpyqsu" path="res://assets/Calveline/Animations/player/idle/f2.png" id="29_p0snf"]
-[ext_resource type="Texture2D" uid="uid://uj6y3svwc2vl" path="res://assets/Calveline/Animations/player/idle/f3.png" id="30_ute88"]
-[ext_resource type="Texture2D" uid="uid://cg7v7xoeqqc0v" path="res://assets/Calveline/Animations/player/idle/f4.png" id="31_pmq5i"]
-[ext_resource type="Texture2D" uid="uid://uyvef2gkxqlu" path="res://assets/Calveline/Animations/player/idle/f5.png" id="32_mr5he"]
-[ext_resource type="Texture2D" uid="uid://cx2twkmumnfpe" path="res://assets/Calveline/Animations/player/idle/f6.png" id="33_rheu5"]
-[ext_resource type="Texture2D" uid="uid://d4f1e7pmr0ytx" path="res://assets/Calveline/Animations/player/idle/f7.png" id="34_4jk1o"]
-[ext_resource type="Texture2D" uid="uid://dpwhrcvavkafd" path="res://assets/Calveline/Animations/player/idle/f8.png" id="35_pek6y"]
 [ext_resource type="Texture2D" uid="uid://bh8wpvpniur6y" path="res://assets/Calveline/Animations/player/idle/f9.png" id="36_sw8bo"]
 [ext_resource type="Texture2D" uid="uid://bprpqe3ytyhme" path="res://assets/Calveline/Animations/player/idle/f10.png" id="37_68u70"]
 [ext_resource type="Texture2D" uid="uid://drnypccjbgumg" path="res://assets/Calveline/Animations/player/idle/f11.png" id="38_buxin"]
@@ -202,33 +193,6 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": ExtResource("27_t2akt")
-}, {
-"duration": 1.0,
-"texture": ExtResource("28_aq3cx")
-}, {
-"duration": 1.0,
-"texture": ExtResource("29_p0snf")
-}, {
-"duration": 1.0,
-"texture": ExtResource("30_ute88")
-}, {
-"duration": 1.0,
-"texture": ExtResource("31_pmq5i")
-}, {
-"duration": 1.0,
-"texture": ExtResource("32_mr5he")
-}, {
-"duration": 1.0,
-"texture": ExtResource("33_rheu5")
-}, {
-"duration": 1.0,
-"texture": ExtResource("34_4jk1o")
-}, {
-"duration": 1.0,
-"texture": ExtResource("35_pek6y")
-}, {
 "duration": 1.0,
 "texture": ExtResource("36_sw8bo")
 }, {
@@ -468,6 +432,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hc3kq"]
 size = Vector2(12, 12)
 
+[sub_resource type="SystemFont" id="SystemFont_kkght"]
+font_names = PackedStringArray("Kenney Future")
+
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 3
 script = ExtResource("1_b52rk")
@@ -478,10 +445,8 @@ texture_filter = 1
 position = Vector2(0, -17)
 scale = Vector2(1, 1.0625)
 sprite_frames = SubResource("SpriteFrames_114uc")
-animation = &"jump"
+animation = &"idle"
 autoplay = "idle"
-frame = 1
-frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -6)
@@ -500,6 +465,7 @@ offset_right = -139.0
 offset_bottom = -153.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
+theme_override_fonts/font = SubResource("SystemFont_kkght")
 theme_override_font_sizes/font_size = 10
 text = "Deaths: 0"
 uppercase = true
