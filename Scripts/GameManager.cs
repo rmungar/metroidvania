@@ -58,14 +58,11 @@ public partial class GameManager : Node2D
 
 	private void updateRespawnPoint(float PositionX, float PositionY){
 		RespawnPoint = GetNode<Node2D>("RespawnPoint");
-		GD.Print("ACTUALIZANDO....");
 		RespawnPoint.Position = new Vector2 (PositionX, PositionY);
-		GD.Print("ACTUALIZADO");
 	}
 
 
 	private void _on_check_points_first_check_point(float PositionX, float PositionY){
-		GD.Print("Actualizando a RP 1");
 		updateRespawnPoint(PositionX, PositionY);
 	}
 

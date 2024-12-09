@@ -23,7 +23,6 @@ public partial class RespawnPoint : Marker2D
 	}
 
 	public void updateCheckPoint(float PositionX, float PositionY){
-		GD.Print("HOLA");
 		this.GlobalPosition = new Vector2(PositionX,PositionY);
 
 	}

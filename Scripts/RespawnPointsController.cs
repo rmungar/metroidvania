@@ -38,7 +38,7 @@ public partial class RespawnPointsController : Node2D
 
 		if (body is CharacterBody2D){
 			if (body is PlayerController){
-				GD.Print("Actualizando RP");
+				
 				EmitSignal(nameof(firstCheckPoint), 479.0, 304.0);
 
 			}
@@ -52,7 +52,6 @@ public partial class RespawnPointsController : Node2D
 		
 		if (body is CharacterBody2D){
 			if (body is PlayerController){
-				GD.Print("Actualizando RP");
 				EmitSignal(nameof(secondCheckPoint), 1546.0, 208.0);
 
 			}
@@ -66,7 +65,7 @@ public partial class RespawnPointsController : Node2D
 
 		if (body is CharacterBody2D){
 			if (body is PlayerController){
-				GD.Print("Actualizando RP");
+				
 				EmitSignal(nameof(thirdCheckPoint), 2214.0, 1088.0);
 
 			}
@@ -78,7 +77,7 @@ public partial class RespawnPointsController : Node2D
 		
 		if (body is CharacterBody2D){
 			if (body is PlayerController){
-				GD.Print("Actualizando RP");
+				
 				EmitSignal(nameof(fourthCheckPoint), 2844.0, 369.0);
 
 			}

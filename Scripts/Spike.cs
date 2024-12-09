@@ -24,7 +24,6 @@ public partial class Spike : Node2D
 	// HANDLE COLLISIONS
 	private void _on_area_2d_body_entered(Node2D body) {
 
-		GD.Print("body " + body + " has entered the area");
 
 		if (body is CharacterBody2D){
 			if (body is PlayerController){
