@@ -43,7 +43,13 @@ public partial class GameManager : Node2D
 
 	private void _on_player_pause(){
 		
-		GetNode<Control>("PauseMenu").Show();
+		CharacterBody2D player = GetNode<CharacterBody2D>("Player");
+		Camera2D camera = player.GetNode<Camera2D>("Camera2D");
+		CanvasLayer cl = camera.GetNode<CanvasLayer>("CanvasLayer");
+		PauseMenu pm = cl.GetNode<PauseMenu>("PauseMenu");
+		pm.Show();
+		PlayerController pc = player as PlayerController;
+		pc.isPaused = true;
 
 	}
 
@@ -94,4 +100,6 @@ public partial class GameManager : Node2D
 	private void _on_win(){
 		GetTree().ChangeSceneToFile("res://scenes/win_Screen.tscn");
 	}
+
+
 }

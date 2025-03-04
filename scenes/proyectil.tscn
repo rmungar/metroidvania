@@ -1,16 +1,17 @@
 [gd_scene load_steps=5 format=3 uid="uid://2t8uiwygh4rt"]
 
 [ext_resource type="Script" path="res://Scripts/Bullet.cs" id="1_awhgd"]
-[ext_resource type="Texture2D" uid="uid://7dd7j8441www" path="res://assets/proyectiles/476.png" id="1_lx00k"]
+[ext_resource type="Texture2D" uid="uid://bgk2akrp4xlrs" path="res://assets/proyectiles/Enderpearl.png" id="2_fp2yc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hsts8"]
-radius = 5.0
+radius = 6.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pcntx"]
-atlas = ExtResource("1_lx00k")
-region = Rect2(53.9599, 238.942, 9.1807, 8.17462)
+atlas = ExtResource("2_fp2yc")
+region = Rect2(0.00862837, -0.217431, 12.1713, 12.2265)
 
 [node name="Bullet" type="Area2D"]
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_awhgd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

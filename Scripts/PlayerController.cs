@@ -66,12 +66,12 @@ public partial class PlayerController : CharacterBody2D
 		// PROJECTILES
 
 			[Export]
-			public Vector2 BulletOffset = new Vector2(0, -5);
+			public Vector2 enderPearlOffset = new Vector2(0, -5);
 
 			[Export]
-			public float ButlletSpeed = 150;
+			public float enderPearlSpeed = 150;
 
-			private PackedScene bullet;
+			private PackedScene enderPearl;
 
 
 	// OTHERS
@@ -89,7 +89,7 @@ public partial class PlayerController : CharacterBody2D
 	public override void _Ready()
 	{
 
-	   	bullet = (PackedScene) ResourceLoader.Load("res://scenes/proyectil.tscn");
+	   	enderPearl = (PackedScene) ResourceLoader.Load("res://scenes/enderPearl.tscn");
 
 		
 
@@ -309,23 +309,22 @@ public partial class PlayerController : CharacterBody2D
 	private void ShootProjectiles(){
 		if (Input.IsActionJustPressed("projectile")) { 
 
-				Bullet instBullet = (Bullet) bullet.Instantiate();
-				instBullet.Speed = ButlletSpeed;
-				instBullet.Position = GlobalPosition + BulletOffset;
+				EnderPearl instBullet = (EnderPearl) enderPearl.Instantiate();
+				instBullet.Speed = enderPearlSpeed;
+				instBullet.Position = GlobalPosition + enderPearlOffset;
 
 				if(GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH){
 					instBullet.Speed *= -1;
-					instBullet.GetChild<CollisionShape2D>(0).GetChild<Sprite2D>(0).FlipH = true;
+					instBullet.GetChild<Area2D>(0).GetChild<Sprite2D>(1).FlipH = true;
 				}
 
-
+				
 				GetTree().Root.AddChild(instBullet);
 
 
 			}
 
 	}
-
 
 
 	public void takeDamage(int damage, Vector2 knockBack){
@@ -348,8 +347,6 @@ public partial class PlayerController : CharacterBody2D
 	private void _on_animated_sprite_2d_animation_finished(){
 
 		if ( GetNode<AnimatedSprite2D>("AnimatedSprite2D").Animation == "death"){
-			
-			GD.Print("Animation Finished");
 			Hide();
 			EmitSignal(nameof(Death));
 		}
@@ -382,4 +379,14 @@ public partial class PlayerController : CharacterBody2D
 		}
 
 	}
+
+
+
+	private void _on_node_2d_on_ender_pearl_collision(Vector2 position){
+		GD.Print("Choco");
+
+		Position = position;
+		
+	}
+
 }

@@ -1,30 +1,51 @@
 using Godot;
 using System;
 
+
 public partial class PauseMenu : Control
 {
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
+	bool isPaused = false;
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
+
+	public override void _Ready(){
+		GetTree().Paused = false;
+		Visible = false;
 	}
 
 
-	private void _on_resume_pressed(){
-		Hide();
+	public void _unhandledInput (InputEvent @event){
+		if (isPaused){
+			if (@event is InputEventKey eventKey){
+				if(eventKey.IsActionPressed("pause")){
+					isPaused = false;
+					GetTree().Paused = false;
+					Visible = false;
+				}
+			}
+		}
 	}
-	private void _on_inventory_pressed(){
-		// ABRIR LA ESCENA DE INVENTARIO
+
+
+	public void _on_resume_pressed(){
+		isPaused = false;
+		GetTree().Paused = false;
+		Visible = false;
 	}
-	private void _on_quit_pressed(){
+
+	public void _on_exit_pressed(){
 		GetTree().Quit();
 	}
 
-	private void _on_controls_pressed(){
-		// DESHABILITADO
+
+	public void _on_save_pressed(){
+		// Save the game
 	}
+
+	public void onPause(){
+		isPaused = true;
+		GetTree().Paused = true;
+		Visible = true;
+	}
+
+
 }
