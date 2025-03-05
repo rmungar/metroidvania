@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://c6meoqihj7xf6" path="res://fondoMenu.tscn" id="1_5yd1j"]
 [ext_resource type="Texture2D" uid="uid://cupdmu17ol4el" path="res://assets/Menu/AGIS.png" id="1_6gi08"]
-[ext_resource type="Script" path="res://Scripts/Menu.cs" id="1_nf02g"]
+[ext_resource type="Script" uid="uid://cp7riiiqoomrf" path="res://Scripts/Menu.cs" id="1_nf02g"]
 [ext_resource type="Theme" uid="uid://wi3c05oyr7k5" path="res://themes/botonMenu.tres" id="2_wp6yi"]
 
 [sub_resource type="SystemFont" id="SystemFont_c52h0"]

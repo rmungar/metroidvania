@@ -1,7 +1,7 @@
 [gd_scene load_steps=36 format=4 uid="uid://dh2fposq0mjwg"]
 
 [ext_resource type="PackedScene" uid="uid://bn5ccuksxamap" path="res://scenes/player.tscn" id="1_62xxu"]
-[ext_resource type="Script" path="res://Scripts/GameManager.cs" id="1_t08wh"]
+[ext_resource type="Script" uid="uid://cc2hegbb42vmd" path="res://Scripts/GameManager.cs" id="1_t08wh"]
 [ext_resource type="PackedScene" uid="uid://ck3idlichsysr" path="res://scenes/CheckPoints.tscn" id="2_5cgmi"]
 [ext_resource type="PackedScene" uid="uid://btnlhjbythvv1" path="res://scenes/respawnPoint.tscn" id="2_6wa4v"]
 [ext_resource type="Texture2D" uid="uid://dbxqcpf46qk83" path="res://assets/tilesets/Final/Assets/Assets.png" id="2_sdbpr"]
@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://c3fv7raxwqvwn" path="res://assets/tilesets/Dungeon Tile Set/Dungeon Tile Set.png" id="7_ieoyu"]
 [ext_resource type="Texture2D" uid="uid://dxsif3nrqcexr" path="res://assets/tilesets/Starter Tiles Platformer/DarkCastleGrid.png" id="7_spnml"]
 [ext_resource type="PackedScene" uid="uid://p75aalwppgi6" path="res://scenes/spikes_&_traps.tscn" id="10_0opmh"]
-[ext_resource type="Script" path="res://Scripts/Front.cs" id="11_t2ie2"]
+[ext_resource type="Script" uid="uid://di4o0aj5xftnw" path="res://Scripts/Front.cs" id="11_t2ie2"]
 [ext_resource type="PackedScene" uid="uid://drfhg584t7rhu" path="res://scenes/win_area.tscn" id="14_iap57"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_grjan"]

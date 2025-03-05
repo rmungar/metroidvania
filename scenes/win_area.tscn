@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://drfhg584t7rhu"]
 
-[ext_resource type="Script" path="res://WinArea.cs" id="1_qv15c"]
+[ext_resource type="Script" uid="uid://dhs2yk6tseiny" path="res://WinArea.cs" id="1_qv15c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_he5np"]
 size = Vector2(16, 31)

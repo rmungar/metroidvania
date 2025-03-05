@@ -1,6 +1,6 @@
 [gd_scene load_steps=32 format=3 uid="uid://p75aalwppgi6"]
 
-[ext_resource type="Script" path="res://Scripts/Spike.cs" id="1_6dkpq"]
+[ext_resource type="Script" uid="uid://dkrpgajm4buco" path="res://Scripts/Spike.cs" id="1_6dkpq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0eo72"]
 size = Vector2(95, 9.5)

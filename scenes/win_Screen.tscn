@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bxoyesoe3iyep"]
 
-[ext_resource type="Script" path="res://WinScreen.cs" id="1_15x24"]
+[ext_resource type="Script" uid="uid://6ldtin68qjts" path="res://WinScreen.cs" id="1_15x24"]
 [ext_resource type="PackedScene" uid="uid://c6meoqihj7xf6" path="res://fondoMenu.tscn" id="2_1yhcx"]
 [ext_resource type="Theme" uid="uid://wi3c05oyr7k5" path="res://themes/botonMenu.tres" id="3_ka4uu"]
 

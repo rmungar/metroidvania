@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cjypdqjekwoje"]
 
-[ext_resource type="Script" path="res://Scripts/PauseMenu.cs" id="1_u3jm2"]
+[ext_resource type="Script" uid="uid://dxyjn7jsqmgvh" path="res://Scripts/PauseMenu.cs" id="1_u3jm2"]
 
 [sub_resource type="Theme" id="Theme_0m7jp"]
 
@@ -13,6 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_0m7jp")
 script = ExtResource("1_u3jm2")
+metadata/_edit_group_ = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1

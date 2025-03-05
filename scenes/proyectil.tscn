@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://2t8uiwygh4rt"]
 
-[ext_resource type="Script" path="res://Scripts/Bullet.cs" id="1_awhgd"]
+[ext_resource type="Script" uid="uid://cm5tr2cq0s2kq" path="res://Scripts/Bullet.cs" id="1_awhgd"]
 [ext_resource type="Texture2D" uid="uid://bgk2akrp4xlrs" path="res://assets/proyectiles/Enderpearl.png" id="2_fp2yc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hsts8"]
