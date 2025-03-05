@@ -3731,6 +3731,7 @@ autowrap_mode = 3
 [connection signal="Death" from="Player" to="." method="_on_player_death"]
 [connection signal="Inventory" from="Player" to="." method="_on_player_inventory"]
 [connection signal="Pause" from="Player" to="." method="_on_player_pause"]
+[connection signal="Resume" from="Player" to="." method="_on_player_resume"]
 [connection signal="firstCheckPoint" from="CheckPoints" to="." method="_on_check_points_first_check_point"]
 [connection signal="fourthCheckPoint" from="CheckPoints" to="." method="_on_check_points_fourth_check_point"]
 [connection signal="secondCheckPoint" from="CheckPoints" to="." method="_on_check_points_second_check_point"]

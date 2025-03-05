@@ -4,7 +4,7 @@ using Godot;
 public partial class GameManager : Node2D
 {
 
-
+	bool gamePaused = false;
 
 	private Vector2 playerPosition = new Vector2 (0, 0);
 
@@ -15,12 +15,13 @@ public partial class GameManager : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		
+	
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+	
 	}
 
 	public void RespawnPlayer(){
@@ -37,28 +38,31 @@ public partial class GameManager : Node2D
 	}
 
 
-	private void _on_player_inventory(){
-
-	}
 
 	private void _on_player_pause(){
-		
+
 		CharacterBody2D player = GetNode<CharacterBody2D>("Player");
-		Camera2D camera = player.GetNode<Camera2D>("Camera2D");
+		PlayerController pc = player as PlayerController;
+		Camera2D camera = pc.GetNode<Camera2D>("Camera2D");
 		CanvasLayer cl = camera.GetNode<CanvasLayer>("CanvasLayer");
 		PauseMenu pm = cl.GetNode<PauseMenu>("PauseMenu");
 		pm.Show();
-		PlayerController pc = player as PlayerController;
+		gamePaused = true;
 		pc.isPaused = true;
 
 	}
 
 
 	private void _on_player_resume(){
-		
-		GetNode<Control>("PauseMenu").Hide();
-		PlayerController pc = GetNode<PlayerController>("Player");
+		CharacterBody2D player = GetNode<CharacterBody2D>("Player");
+		PlayerController pc = player as PlayerController;
+		Camera2D cam = player.GetNode<Camera2D>("Camera2D");
+		CanvasLayer cl = cam.GetNode<CanvasLayer>("CanvasLayer");
+		PauseMenu pm = cl.GetNode<PauseMenu>("PauseMenu");
+		pm.Hide();
+		gamePaused = false;
 		pc.isPaused = false;
+
 	}
 
 
@@ -83,7 +87,6 @@ public partial class GameManager : Node2D
 	private void _on_check_points_fourth_check_point(float PositionX, float PositionY){
 		updateRespawnPoint(PositionX, PositionY);
 	}
-
 
 
 	private void _on_kill_zone_body_entered(Node2D body){

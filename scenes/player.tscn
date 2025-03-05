@@ -499,3 +499,4 @@ target_position = Vector2(3.24249e-05, 9)
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="animation_looped" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_looped"]
+[connection signal="Resume" from="Camera2D/CanvasLayer/PauseMenu" to="." method="_on_pause_menu_resume"]

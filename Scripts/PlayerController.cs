@@ -4,7 +4,8 @@ using System;
 public partial class PlayerController : CharacterBody2D
 {
 
-
+	[Signal]
+	public delegate void ResumeEventHandler();
 	// PLAYER RELATED PARAMS
 
 		// HEALTH
@@ -102,7 +103,7 @@ public partial class PlayerController : CharacterBody2D
 		Paused();
 		InventoryOpen();
 
-		if(!isDead){
+		if(!isDead && !isPaused){
 			
 
 			if(!isDashing && !isWallJumping){
@@ -147,6 +148,10 @@ public partial class PlayerController : CharacterBody2D
 			
 			Velocity = velocity;
 			MoveAndSlide();
+		}
+
+		if (!isDead && isPaused){
+			GetNode<AnimatedSprite2D>("AnimatedSprite2D").Stop();
 		}
 		
 	}
@@ -388,5 +393,10 @@ public partial class PlayerController : CharacterBody2D
 		Position = position;
 		
 	}
+
+	public void _on_pause_menu_resume(){
+		EmitSignal(nameof(Resume));
+	}
+
 
 }

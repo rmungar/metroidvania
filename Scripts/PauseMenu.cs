@@ -6,6 +6,8 @@ public partial class PauseMenu : Control
 {
 	bool isPaused = false;
 
+	[Signal]
+	public delegate void ResumeEventHandler();
 
 	
 
@@ -38,6 +40,7 @@ public partial class PauseMenu : Control
 
 
 	public void _on_resume_pressed(){
+		EmitSignal(nameof(Resume));
 		isPaused = false;
 		GetTree().Paused = false;
 		Visible = false;
