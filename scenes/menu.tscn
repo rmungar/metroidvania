@@ -1,9 +1,10 @@
-[gd_scene load_steps=35 format=3 uid="uid://c727owoudlfd8"]
+[gd_scene load_steps=36 format=3 uid="uid://c727owoudlfd8"]
 
 [ext_resource type="PackedScene" uid="uid://c6meoqihj7xf6" path="res://fondoMenu.tscn" id="1_5yd1j"]
 [ext_resource type="Texture2D" uid="uid://cupdmu17ol4el" path="res://assets/Menu/AGIS.png" id="1_6gi08"]
 [ext_resource type="Script" uid="uid://cp7riiiqoomrf" path="res://Scripts/Menu.cs" id="1_nf02g"]
 [ext_resource type="Theme" uid="uid://wi3c05oyr7k5" path="res://themes/botonMenu.tres" id="2_wp6yi"]
+[ext_resource type="Script" uid="uid://dabhsn2gafdy4" path="res://Scripts/ApiController.cs" id="5_4ytvr"]
 
 [sub_resource type="SystemFont" id="SystemFont_c52h0"]
 font_names = PackedStringArray("Kenney Future")
@@ -239,6 +240,12 @@ theme = ExtResource("2_wp6yi")
 theme_override_colors/font_hover_color = Color(0, 0.776471, 0, 1)
 text = "Play"
 
+[node name="RESUME" type="Button" parent="VBoxBotones"]
+layout_mode = 2
+theme = ExtResource("2_wp6yi")
+theme_override_colors/font_hover_color = Color(0, 0.776471, 0, 1)
+text = "Resume"
+
 [node name="OPTIONS" type="Button" parent="VBoxBotones"]
 layout_mode = 2
 theme = ExtResource("2_wp6yi")
@@ -270,5 +277,11 @@ frame_progress = 0.665486
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("1_5yd1j")]
 
+[node name="APIController" type="Node" parent="."]
+script = ExtResource("5_4ytvr")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="APIController"]
+
 [connection signal="pressed" from="VBoxBotones/PLAY" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="VBoxBotones/RESUME" to="APIController" method="_on_resume_pressed"]
 [connection signal="pressed" from="VBoxBotones/QUIT" to="." method="_on_quit_pressed"]
