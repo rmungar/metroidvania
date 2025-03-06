@@ -9,6 +9,7 @@ public partial class ApiController : Node
 
     private int deaths = 0;
     private int lastCp = 0;
+    private bool isSaveRequest = false;
 
     public override void _Ready()
     {
@@ -18,7 +19,9 @@ public partial class ApiController : Node
 
     public void _on_resume_pressed()
     {
-        // Hacer la petición GET al servidor para verificar si el jugador ya existe
+        // Solo comprobar si hay datos en la base de datos
+        
+        isSaveRequest = false;
         string[] headers = { "Content-Type: application/json" };
         Error error = requester.Request("https://nthapiweb.onrender.com/api/Player/Get/1", headers, HttpClient.Method.Get);
         
@@ -30,18 +33,14 @@ public partial class ApiController : Node
 
     public void _on_player_save(int Deaths, int LastCheckpoint)
     {
+        isSaveRequest = true;
+        deaths = Deaths;
+        lastCp = LastCheckpoint;
+
+        // Verificar si el jugador existe antes de guardarlo
         string[] headers = { "Content-Type: application/json" };
-        Player player = new Player(1, LastCheckpoint, Deaths); // Corrige la posición de LastCheckpoint y Deaths
-
-        this.deaths = Deaths;
-        this.lastCp = LastCheckpoint;
-
-        // Convertir el objeto Player a JSON
-        string jsonData = player.ToJsonContent();
-
-        // Primero, realizamos una solicitud GET para comprobar si el jugador existe
         Error error = requester.Request("https://nthapiweb.onrender.com/api/Player/Get/1", headers, HttpClient.Method.Get);
-
+        
         if (error != Error.Ok)
         {
             GD.PrintErr("Error al hacer la solicitud GET para verificar existencia: " + error);
@@ -54,19 +53,28 @@ public partial class ApiController : Node
         GD.Print($"Código de respuesta: {responseCode}");
         GD.Print($"Cuerpo de la respuesta: {responseText}");
 
+        if (!isSaveRequest)
+        {
+            // Si es una petición de Resume, solo imprimimos si hay datos o no
+            if (responseCode == 200)
+            {
+                GD.Print("Datos de jugador encontrados.");
+            }
+            else
+            {
+                GD.Print("No se encontraron datos de jugador.");
+            }
+            return;
+        }
+
+        // Si es una petición de guardado
         if (responseCode == 200)
         {
-            // Si el jugador existe (respuesta 200), actualizarlo
-            if (responseText != "")
-            {
-                // El jugador ya existe, así que realizar una solicitud PUT para actualizar
-                GD.Print("El jugador existe, actualizando...");
-                UpdatePlayer(lastCp, deaths);
-            }
+            GD.Print("El jugador existe, actualizando...");
+            UpdatePlayer(lastCp, deaths);
         }
         else if (responseCode == 404)
         {
-            // Si el jugador no existe (respuesta 404), crear uno nuevo
             GD.Print("El jugador no existe, creando uno nuevo...");
             CreatePlayer(deaths, lastCp);
         }
@@ -78,12 +86,17 @@ public partial class ApiController : Node
 
     private void CreatePlayer(int deaths, int lastCheckPoint)
     {
-        // Crear un nuevo jugador
-        Player player = new Player(1, lastCheckPoint, deaths); // Ajusta las variables si es necesario
-        string jsonData = player.ToJsonContent();
+        PlayerController pc = GetParent().GetNode<PlayerController>("Player");
 
-        // Enviar la solicitud POST para crear un jugador
+        pc.PrintData();
+        GD.Print(pc.checkPoint);
+        GD.Print(pc.deaths);
+
+        Player player = new Player(1, pc.checkPoint, pc.deaths);
+        string jsonData = player.ToJsonContent();
         string[] headers = { "Content-Type: application/json" };
+        //GD.Print("JSON Enviado: " + jsonData);
+
         Error error = requester.Request("https://nthapiweb.onrender.com/api/Player/Create", headers, HttpClient.Method.Post, jsonData);
         
         if (error != Error.Ok)
@@ -94,26 +107,23 @@ public partial class ApiController : Node
 
     private void UpdatePlayer(int deaths, int lastCheckPoint)
     {
-        // Parsear el JSON existente para obtener los datos actuales del jugador
-        try
-        {
-        
-            // Crear los datos actualizados
-            Player player = new Player(1, lastCheckPoint, deaths); // Asegúrate de actualizar los valores de Deaths y LastCheckpoint
-            string jsonData = player.ToJsonContent();
 
-            // Realizar la solicitud PUT para actualizar los datos
-            string[] headers = { "Content-Type: application/json" };
-            Error error = requester.Request($"https://nthapiweb.onrender.com/api/Player/Update/1", headers, HttpClient.Method.Put, jsonData);
-            
-            if (error != Error.Ok)
-            {
-                GD.PrintErr("Error al hacer la solicitud PUT para actualizar el jugador: " + error);
-            }
-        }
-        catch (JsonException e)
+        PlayerController pc = GetParent().GetNode<PlayerController>("Player");
+
+        pc.PrintData();
+        GD.Print(pc.checkPoint);
+        GD.Print(pc.deaths);
+
+        Player player = new Player(1, pc.checkPoint, pc.deaths);
+        string jsonData = player.ToJsonContent();
+        string[] headers = { "Content-Type: application/json" };
+        //GD.Print("JSON Enviado: " + jsonData);
+
+        Error error = requester.Request("https://nthapiweb.onrender.com/api/Player/Update/1", headers, HttpClient.Method.Put, jsonData);
+        
+        if (error != Error.Ok)
         {
-            GD.PrintErr("Error al parsear el JSON de la respuesta: " + e.Message);
+            GD.PrintErr("Error al hacer la solicitud PUT para actualizar el jugador: " + error);
         }
     }
 }

@@ -12,7 +12,7 @@ public partial class GameManager : Node2D
 	public int LastCheckpoint = 0;
 
 
-
+	int cpUpdates = 0;
 
 
 	private Vector2 playerPosition = new Vector2 (0, 0);
@@ -84,29 +84,49 @@ public partial class GameManager : Node2D
 
 
 	private void updateRespawnPoint(float PositionX, float PositionY){
-		CharacterBody2D player = GetNode<CharacterBody2D>("Player");
-		PlayerController pc = player as PlayerController;
-		if(pc.checkPoint < 4){
-			pc.increaseCp();
-		}
 		RespawnPoint = GetNode<Node2D>("/root/Game/RespawnPoint");
 		RespawnPoint.Position = new Vector2 (PositionX, PositionY);
 	}
 
 
 	private void _on_check_points_first_check_point(float PositionX, float PositionY){
+		CharacterBody2D player = GetNode<CharacterBody2D>("Player");
+		PlayerController pc = player as PlayerController;
+		
+		if (cpUpdates < 1 && pc.checkPoint < 1) {
+			pc.increaseCp();
+			cpUpdates++;
+		}
 		updateRespawnPoint(PositionX, PositionY);
 	}
 
 	private void _on_check_points_second_check_point(float PositionX, float PositionY){
+		CharacterBody2D player = GetNode<CharacterBody2D>("Player");
+		PlayerController pc = player as PlayerController;
+		if (cpUpdates < 2 && pc.checkPoint < 2) {
+			pc.increaseCp();
+			cpUpdates++;
+		}
 		updateRespawnPoint(PositionX, PositionY);
 	}
 
 	private void _on_check_points_third_check_point(float PositionX, float PositionY){
+		CharacterBody2D player = GetNode<CharacterBody2D>("Player");
+		PlayerController pc = player as PlayerController;
+		if (cpUpdates < 3 && pc.checkPoint < 3) {
+			pc.increaseCp();
+			cpUpdates++;
+		}
 		updateRespawnPoint(PositionX, PositionY);
 	}
 
 	private void _on_check_points_fourth_check_point(float PositionX, float PositionY){
+		CharacterBody2D player = GetNode<CharacterBody2D>("Player");
+		PlayerController pc = player as PlayerController;
+		if (cpUpdates < 4 && pc.checkPoint < 4) {
+			pc.increaseCp();
+			cpUpdates++;
+		}
 		updateRespawnPoint(PositionX, PositionY);
 	}
 

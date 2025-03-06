@@ -2,15 +2,15 @@ using System.Net.Http.Json;
 
 public class Player
 {
-    public int Id { get; set; }
-    public int LastCheckpoint { get; set; }
-    public int Deaths { get; set; }
+    public int id { get; set; }
+    public int lastCheckPoint { get; set; }
+    public int deaths { get; set; }
 
     public Player(int id, int deaths, int lastCheckpoint)
     {
-        Id = id;
-        this.LastCheckpoint = lastCheckpoint;
-        this.Deaths = deaths;
+        this.id = id;
+        this.lastCheckPoint = lastCheckpoint;
+        this.deaths = deaths;
     }
 
     // Método que devuelve el contenido JSON necesario para la solicitud
@@ -21,9 +21,9 @@ public class Player
         {
             player = new
             {
-                Id,
-                LastCheckpoint,
-                Deaths
+                this.id,
+                this.lastCheckPoint,
+                this.deaths
             }
         };
 

@@ -10,7 +10,7 @@ public partial class PlayerController : CharacterBody2D
 
 		// HEALTH
 
-			private int Deaths;
+			public int deaths;
 
 			public int checkPoint;
 
@@ -19,7 +19,7 @@ public partial class PlayerController : CharacterBody2D
 			}
 
 			public void increaseDeaths() {
-				Deaths++;
+				deaths++;
 			}
 
 			[Export]
@@ -103,11 +103,7 @@ public partial class PlayerController : CharacterBody2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-
 	   	enderPearl = (PackedScene) ResourceLoader.Load("res://scenes/enderPearl.tscn");
-
-		
-
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -356,7 +352,6 @@ public partial class PlayerController : CharacterBody2D
 		if (Hp <= 0){
 			Hp = 0;
 			isDead = true;
-			increaseDeaths();
 			GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("death"); 
 			GD.Print("Skill issue");
 		}
@@ -367,7 +362,8 @@ public partial class PlayerController : CharacterBody2D
 
 		if ( GetNode<AnimatedSprite2D>("AnimatedSprite2D").Animation == "death"){
 			Hide();
-			EmitSignal(nameof(Death));
+			increaseDeaths();
+			EmitSignal(nameof(Death));		
 		}
 
 	}
@@ -403,6 +399,12 @@ public partial class PlayerController : CharacterBody2D
 	}
 
 	public void _on_pause_menu_save(){
-		EmitSignal(nameof(Save), Deaths, checkPoint);
+		EmitSignal(nameof(Save), deaths, checkPoint);
+	}
+
+
+
+	public void PrintData(){
+		GD.Print($"Muertes: {deaths} ; CP: {checkPoint}");
 	}
 }
