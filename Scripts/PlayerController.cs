@@ -10,6 +10,18 @@ public partial class PlayerController : CharacterBody2D
 
 		// HEALTH
 
+			private int Deaths;
+
+			public int checkPoint;
+
+			public void increaseCp() {
+				checkPoint++;
+			}
+
+			public void increaseDeaths() {
+				Deaths++;
+			}
+
 			[Export]
 			private int Hp = 100;
 
@@ -83,6 +95,8 @@ public partial class PlayerController : CharacterBody2D
 		[Signal]
 		public delegate void PauseEventHandler();
 
+		[Signal]
+		public delegate void SaveEventHandler(int deaths, int lastCheckPoint);
 
 
 		
@@ -101,7 +115,6 @@ public partial class PlayerController : CharacterBody2D
 	{
 
 		Paused();
-		InventoryOpen();
 
 		if(!isDead && !isPaused){
 			
@@ -343,6 +356,7 @@ public partial class PlayerController : CharacterBody2D
 		if (Hp <= 0){
 			Hp = 0;
 			isDead = true;
+			increaseDeaths();
 			GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("death"); 
 			GD.Print("Skill issue");
 		}
@@ -369,20 +383,10 @@ public partial class PlayerController : CharacterBody2D
 	}
 
 
-	private void InventoryOpen(){
-		if (Input.IsActionJustPressed("inventory")){
-
-			EmitSignal(nameof(Inventory));
-
-		}
-	}
-
 	private void Paused(){
-
 		if (Input.IsActionJustPressed("pause")){
 			EmitSignal(nameof(Pause));
 		}
-
 	}
 
 
@@ -398,5 +402,7 @@ public partial class PlayerController : CharacterBody2D
 		EmitSignal(nameof(Resume));
 	}
 
-
+	public void _on_pause_menu_save(){
+		EmitSignal(nameof(Save), Deaths, checkPoint);
+	}
 }

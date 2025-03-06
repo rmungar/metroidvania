@@ -6,12 +6,6 @@
 [ext_resource type="Theme" uid="uid://wi3c05oyr7k5" path="res://themes/botonMenu.tres" id="2_wp6yi"]
 [ext_resource type="Script" uid="uid://dabhsn2gafdy4" path="res://Scripts/ApiController.cs" id="5_4ytvr"]
 
-[sub_resource type="SystemFont" id="SystemFont_c52h0"]
-font_names = PackedStringArray("Kenney Future")
-
-[sub_resource type="Theme" id="Theme_1ypuu"]
-default_font = SubResource("SystemFont_c52h0")
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_4dsyy"]
 atlas = ExtResource("1_6gi08")
 region = Rect2(0, 0, 158, 54)
@@ -209,6 +203,12 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="SystemFont" id="SystemFont_c52h0"]
+font_names = PackedStringArray("Kenney Future")
+
+[sub_resource type="Theme" id="Theme_1ypuu"]
+default_font = SubResource("SystemFont_c52h0")
+
 [node name="Menu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -218,6 +218,15 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_nf02g")
 
+[node name="TITULO" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(570, 132)
+scale = Vector2(2.20886, 2.07407)
+sprite_frames = SubResource("SpriteFrames_y57av")
+animation = &"new_animation"
+autoplay = "new_animation"
+frame_progress = 0.665486
+
 [node name="VBoxBotones" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
@@ -225,10 +234,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -144.0
-offset_top = -202.0
-offset_right = 135.0
-offset_bottom = 213.0
+offset_left = -142.0
+offset_top = -164.0
+offset_right = 137.0
+offset_bottom = 251.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
@@ -265,15 +274,6 @@ theme = SubResource("Theme_1ypuu")
 theme_override_colors/font_hover_color = Color(0, 0.776471, 0, 1)
 theme_override_font_sizes/font_size = 12
 text = "quit"
-
-[node name="TITULO" type="AnimatedSprite2D" parent="VBoxBotones"]
-texture_filter = 1
-position = Vector2(128, 46)
-scale = Vector2(2.20886, 2.07407)
-sprite_frames = SubResource("SpriteFrames_y57av")
-animation = &"new_animation"
-autoplay = "new_animation"
-frame_progress = 0.665486
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("1_5yd1j")]
 

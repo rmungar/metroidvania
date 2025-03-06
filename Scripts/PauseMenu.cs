@@ -9,6 +9,9 @@ public partial class PauseMenu : Control
 	[Signal]
 	public delegate void ResumeEventHandler();
 
+	[Signal]
+	public delegate void SaveEventHandler();
+
 	
 
 	public override void _Ready(){
@@ -52,7 +55,7 @@ public partial class PauseMenu : Control
 
 
 	public void _on_save_pressed(){
-		// Save the game
+		EmitSignal(nameof(Save));
 	}
 
 	public void onPause(){

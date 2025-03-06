@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=4 uid="uid://dh2fposq0mjwg"]
+[gd_scene load_steps=37 format=4 uid="uid://dh2fposq0mjwg"]
 
 [ext_resource type="PackedScene" uid="uid://bn5ccuksxamap" path="res://scenes/player.tscn" id="1_62xxu"]
 [ext_resource type="Script" uid="uid://cc2hegbb42vmd" path="res://Scripts/GameManager.cs" id="1_t08wh"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://p75aalwppgi6" path="res://scenes/spikes_&_traps.tscn" id="10_0opmh"]
 [ext_resource type="Script" uid="uid://di4o0aj5xftnw" path="res://Scripts/Front.cs" id="11_t2ie2"]
 [ext_resource type="PackedScene" uid="uid://drfhg584t7rhu" path="res://scenes/win_area.tscn" id="14_iap57"]
+[ext_resource type="Script" uid="uid://dabhsn2gafdy4" path="res://Scripts/ApiController.cs" id="16_ca42v"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_grjan"]
 texture = ExtResource("2_sdbpr")
@@ -3728,10 +3729,16 @@ autowrap_mode = 3
 
 [node name="WinArea" parent="." instance=ExtResource("14_iap57")]
 
+[node name="APIController" type="Node" parent="."]
+script = ExtResource("16_ca42v")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="APIController"]
+
 [connection signal="Death" from="Player" to="." method="_on_player_death"]
 [connection signal="Inventory" from="Player" to="." method="_on_player_inventory"]
 [connection signal="Pause" from="Player" to="." method="_on_player_pause"]
 [connection signal="Resume" from="Player" to="." method="_on_player_resume"]
+[connection signal="Save" from="Player" to="APIController" method="_on_player_save"]
 [connection signal="firstCheckPoint" from="CheckPoints" to="." method="_on_check_points_first_check_point"]
 [connection signal="fourthCheckPoint" from="CheckPoints" to="." method="_on_check_points_fourth_check_point"]
 [connection signal="secondCheckPoint" from="CheckPoints" to="." method="_on_check_points_second_check_point"]

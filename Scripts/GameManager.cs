@@ -1,3 +1,4 @@
+using System.Collections;
 using Godot;
 
 
@@ -6,16 +7,32 @@ public partial class GameManager : Node2D
 
 	bool gamePaused = false;
 
+	public int PlayerDeaths = 0;
+
+	public int LastCheckpoint = 0;
+
+
+
+
+
 	private Vector2 playerPosition = new Vector2 (0, 0);
 
 	// RESPAWN POINT
 
-		public Node2D RespawnPoint;
+	public Node2D RespawnPoint;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-	
+		foreach (Node child in GetTree().Root.GetChildren())
+		{
+			if (child.Name == "Game"){
+				if (PlayerDeaths != 0 || LastCheckpoint != 0){
+					setDeaths(PlayerDeaths);
+					setCheckPoint(LastCheckpoint);
+				}
+			}
+		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -67,7 +84,12 @@ public partial class GameManager : Node2D
 
 
 	private void updateRespawnPoint(float PositionX, float PositionY){
-		RespawnPoint = GetNode<Node2D>("RespawnPoint");
+		CharacterBody2D player = GetNode<CharacterBody2D>("Player");
+		PlayerController pc = player as PlayerController;
+		if(pc.checkPoint < 4){
+			pc.increaseCp();
+		}
+		RespawnPoint = GetNode<Node2D>("/root/Game/RespawnPoint");
 		RespawnPoint.Position = new Vector2 (PositionX, PositionY);
 	}
 
@@ -104,5 +126,28 @@ public partial class GameManager : Node2D
 		GetTree().ChangeSceneToFile("res://scenes/win_Screen.tscn");
 	}
 
+	
+	public void setDeaths(int deaths){
+		CharacterBody2D player = GetNode<CharacterBody2D>("Player");
+		PlayerController pc = player as PlayerController;
+		Camera2D cam = pc.GetNode<Camera2D>("Camera2D");
+		Label label = cam.GetNode<Label>("Deaths");
+		label.Text = $"Deaths: {deaths}";
+	}
+
+	public void setCheckPoint(int checkPoint){
+		if (checkPoint == 1){
+			_on_check_points_first_check_point(479.0f, 304.0f);
+		}
+		if (checkPoint == 2){
+			_on_check_points_second_check_point(1546.0f, 208.0f);
+		}
+		if (checkPoint == 3){
+			_on_check_points_third_check_point(2214.0f, 1088.0f);
+		}
+		if (checkPoint == 4){
+			_on_check_points_fourth_check_point(2844.0f, 369.0f);
+		}
+	}
 
 }

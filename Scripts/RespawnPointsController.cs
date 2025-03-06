@@ -33,32 +33,22 @@ public partial class RespawnPointsController : Node2D
 
 	public void _on_first_checkPoint(Node2D body){
 		
-
-
-
 		if (body is CharacterBody2D){
 			if (body is PlayerController){
 				
-				EmitSignal(nameof(firstCheckPoint), 479.0, 304.0);
+				EmitSignal(nameof(firstCheckPoint), 479.0f, 304.0f);
 
 			}
 		}
-
-
-	
-
 	}
 	public void _on_second_checkPoint(Node2D body){
 		
 		if (body is CharacterBody2D){
 			if (body is PlayerController){
-				EmitSignal(nameof(secondCheckPoint), 1546.0, 208.0);
+				EmitSignal(nameof(secondCheckPoint), 1546.0f, 208.0f);
 
 			}
 		}
-
-		
-
 	}
 	public void _on_third_checkPoint(Node2D body){
 		
@@ -66,24 +56,19 @@ public partial class RespawnPointsController : Node2D
 		if (body is CharacterBody2D){
 			if (body is PlayerController){
 				
-				EmitSignal(nameof(thirdCheckPoint), 2214.0, 1088.0);
+				EmitSignal(nameof(thirdCheckPoint), 2214.0f, 1088.0f);
 
 			}
 		}
-		
-
 	}
 	public void _on_fourth_checkPoint(Node2D body){
 		
 		if (body is CharacterBody2D){
 			if (body is PlayerController){
 				
-				EmitSignal(nameof(fourthCheckPoint), 2844.0, 369.0);
+				EmitSignal(nameof(fourthCheckPoint), 2844.0f, 369.0f);
 
 			}
 		}
-
-		
-
 	}
 }
