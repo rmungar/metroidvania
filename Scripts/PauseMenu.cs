@@ -50,7 +50,7 @@ public partial class PauseMenu : Control
 	}
 
 	public void _on_exit_pressed(){
-		GetTree().Quit();
+		GetTree().ChangeSceneToFile("res://scenes/menu.tscn");
 	}
 
 

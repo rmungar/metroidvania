@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class PlayerController : CharacterBody2D
 {
@@ -104,6 +105,10 @@ public partial class PlayerController : CharacterBody2D
 	public override void _Ready()
 	{
 	   	enderPearl = (PackedScene) ResourceLoader.Load("res://scenes/enderPearl.tscn");
+		GameManager game = GetParent<GameManager>();
+		if(game.resumeInfo != null){
+			ResumeGame(game.resumeInfo);
+		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -386,7 +391,6 @@ public partial class PlayerController : CharacterBody2D
 	}
 
 
-
 	private void _on_node_2d_on_ender_pearl_collision(Vector2 position){
 		GD.Print("Choco");
 
@@ -403,8 +407,34 @@ public partial class PlayerController : CharacterBody2D
 	}
 
 
-
 	public void PrintData(){
 		GD.Print($"Muertes: {deaths} ; CP: {checkPoint}");
+	}
+
+
+	private void ResumeGame(Dictionary<string, int> info){
+
+		int resumeDeaths = info["deaths"];
+		Camera2D cam = GetNode<Camera2D>("Camera2D");
+		DeathCounter deathLabel = cam.GetNode<DeathCounter>("Label");
+		deathLabel.deathCounter = resumeDeaths;
+
+
+		int cp = info["cp"];
+		GameManager game = GetParent<GameManager>();
+		RespawnPointsController rpc = game.GetNode<RespawnPointsController>("Checkpoints");
+		if (cp == 1){
+			rpc._on_first_checkPoint(this);
+		}
+		if (cp == 2){
+			rpc._on_second_checkPoint(this);
+		}
+		if (cp == 3){
+			rpc._on_third_checkPoint(this);
+		}
+		if (cp == 4){
+			rpc._on_fourth_checkPoint(this);
+		}
+		RespawnPlayer();
 	}
 }

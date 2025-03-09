@@ -247,19 +247,19 @@ alignment = 1
 layout_mode = 2
 theme = ExtResource("2_wp6yi")
 theme_override_colors/font_hover_color = Color(0, 0.776471, 0, 1)
-text = "Play"
+text = "PLAY"
 
 [node name="RESUME" type="Button" parent="VBoxBotones"]
 layout_mode = 2
 theme = ExtResource("2_wp6yi")
 theme_override_colors/font_hover_color = Color(0, 0.776471, 0, 1)
-text = "Resume"
+text = "RESUME"
 
 [node name="OPTIONS" type="Button" parent="VBoxBotones"]
 layout_mode = 2
 theme = ExtResource("2_wp6yi")
 disabled = true
-text = "Options"
+text = "OPTIONS"
 
 [node name="CONTROLS" type="Button" parent="VBoxBotones"]
 layout_mode = 2
@@ -273,7 +273,7 @@ layout_mode = 2
 theme = SubResource("Theme_1ypuu")
 theme_override_colors/font_hover_color = Color(0, 0.776471, 0, 1)
 theme_override_font_sizes/font_size = 12
-text = "quit"
+text = "QUIT"
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("1_5yd1j")]
 

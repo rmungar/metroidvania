@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Godot;
 
 
@@ -11,6 +12,15 @@ public partial class GameManager : Node2D
 
 	public int LastCheckpoint = 0;
 
+	public Dictionary<string, int> resumeInfo = null;
+
+
+	public void setResumeInfo(int deaths, int cp){
+		resumeInfo = new Dictionary<string, int>{
+			{"deaths",deaths}, 
+			{"cp", cp}
+		};
+	}
 
 	int cpUpdates = 0;
 
@@ -24,15 +34,7 @@ public partial class GameManager : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		foreach (Node child in GetTree().Root.GetChildren())
-		{
-			if (child.Name == "Game"){
-				if (PlayerDeaths != 0 || LastCheckpoint != 0){
-					setDeaths(PlayerDeaths);
-					setCheckPoint(LastCheckpoint);
-				}
-			}
-		}
+		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

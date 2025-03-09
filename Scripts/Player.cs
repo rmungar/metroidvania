@@ -1,14 +1,15 @@
+using System.Collections.Generic;
 using System.Net.Http.Json;
 
 public class Player
 {
-    public int id { get; set; }
+    public string? _id { get; set; }
     public int lastCheckPoint { get; set; }
     public int deaths { get; set; }
 
-    public Player(int id, int deaths, int lastCheckpoint)
+    public Player(string? id, int deaths, int lastCheckpoint)
     {
-        this.id = id;
+        this._id = id;
         this.lastCheckPoint = lastCheckpoint;
         this.deaths = deaths;
     }
@@ -17,14 +18,11 @@ public class Player
     public string ToJsonContent()
     {
         // Creamos un objeto que contiene el jugador
-        var playerData = new
+        var playerData = new Dictionary<string, object>
         {
-            player = new
-            {
-                this.id,
-                this.lastCheckPoint,
-                this.deaths
-            }
+            { "_id", this._id },
+            { "lastCheckPoint", this.lastCheckPoint },
+            { "deaths", this.deaths }
         };
 
         // Usamos JsonContent para serializar el objeto
