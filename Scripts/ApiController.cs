@@ -98,7 +98,7 @@ public partial class ApiController : Node
 					JsonDocument json = JsonDocument.Parse(responseText);
 					string mongoId = json.RootElement.GetProperty("_id").GetString();
 					GD.Print("MongoDB ID obtenido: " + mongoId);
-					UpdatePlayer(mongoId, lastCp, deaths);
+					UpdatePlayer(mongoId);
 				}
 				catch (Exception e)
 				{
@@ -141,7 +141,7 @@ public partial class ApiController : Node
 	}
 
 	// Actualizar los datos del jugador existente
-	private void UpdatePlayer(string id, int deaths, int lastCheckPoint)
+	private void UpdatePlayer(string id)
 	{
 		PlayerController pc = GetParent().GetNode<PlayerController>("Player");
 

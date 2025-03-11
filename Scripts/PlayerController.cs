@@ -105,16 +105,21 @@ public partial class PlayerController : CharacterBody2D
 	public override void _Ready()
 	{
 	   	enderPearl = (PackedScene) ResourceLoader.Load("res://scenes/enderPearl.tscn");
-		GameManager game = GetParent<GameManager>();
+		GameManager game = (GameManager)GetNode("/root/GameManager");
+		GD.Print(game.resumeInfo);
 		if(game.resumeInfo != null){
+			GD.Print("HAY DATOS");
 			ResumeGame(game.resumeInfo);
+		}
+		else {
+			GD.Print("NO HAY DATOS");
 		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
-
+		
 		Paused();
 
 		if(!isDead && !isPaused){
@@ -359,6 +364,9 @@ public partial class PlayerController : CharacterBody2D
 			isDead = true;
 			GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("death"); 
 			GD.Print("Skill issue");
+			Camera2D Camera = GetNode<Camera2D>("Camera2D");
+			DeathCounter deathCounter = Camera.GetChild<DeathCounter>(0);
+			deathCounter._on_player_death();
 		}
 	}
 
@@ -375,9 +383,7 @@ public partial class PlayerController : CharacterBody2D
 
 
 	public void RespawnPlayer(){
-		Camera2D Camera = GetNode<Camera2D>("Camera2D");
-		DeathCounter deathCounter = Camera.GetChild<DeathCounter>(0);
-		deathCounter._on_player_death();
+		
 		Show();
 		Hp = 1;
 		isDead = false;
@@ -416,13 +422,14 @@ public partial class PlayerController : CharacterBody2D
 
 		int resumeDeaths = info["deaths"];
 		Camera2D cam = GetNode<Camera2D>("Camera2D");
-		DeathCounter deathLabel = cam.GetNode<DeathCounter>("Label");
+		DeathCounter deathLabel = cam.GetNode<DeathCounter>("Deaths");
 		deathLabel.deathCounter = resumeDeaths;
 
+		deaths = resumeDeaths;
 
 		int cp = info["cp"];
 		GameManager game = GetParent<GameManager>();
-		RespawnPointsController rpc = game.GetNode<RespawnPointsController>("Checkpoints");
+		RespawnPointsController rpc = game.GetNode<RespawnPointsController>("CheckPoints");
 		if (cp == 1){
 			rpc._on_first_checkPoint(this);
 		}
@@ -435,6 +442,8 @@ public partial class PlayerController : CharacterBody2D
 		if (cp == 4){
 			rpc._on_fourth_checkPoint(this);
 		}
-		RespawnPlayer();
+		checkPoint = cp;
+		game.RespawnPlayer();
+
 	}
 }
